@@ -1,0 +1,32 @@
+/**
+ * Created by Administrator on 2017/2/24 0024.
+ */
+angular.module('routers',['ui.router'])
+    .config(['$stateProvider','$urlRouterProvider',function($stateProvider,$urlRouterProvider){
+        $stateProvider.state('index',{
+            url:'/index',
+            templateUrl:'template/index.html',
+            controller:'indexCtrl'
+        }).state('index.recommend',{
+            url:'/recommend/:id',
+            templateUrl:'template/recommend.html',
+            controller:'recommendCtrl'
+        }).state('index.hot',{
+            url:'/hot/:id',
+            templateUrl:'template/hot.html',
+            controller:'hotCtrl'
+        }).state('index.entertainment',{
+            url:'/entertainment/:id',
+            templateUrl:'template/entertainment.html',
+            controller:'entertainmentCtrl'
+        }).state('detail',{
+            url:'/detail/:id',
+            templateUrl:'template/detail.html',
+            controller:'detailCtrl'
+        }).state('login',{
+            url:'/login',
+            templateUrl:'template/login.html',
+            controller:'loginCtrl'
+        })
+        $urlRouterProvider.when('','/index/recommend/6')
+    }])

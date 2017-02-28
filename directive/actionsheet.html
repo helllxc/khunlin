@@ -1,0 +1,13 @@
+<div id="actionSheet_wrap" ng-if="isActionSheet">
+    <div class="weui-mask_transparent actionsheet__mask" id="mask"></div>
+
+    <div class="weui-skin_android" id="weui-android-actionsheet" style="display: {{isActionSheet?'block':'false'}}">
+        <div class="weui-mask"></div>
+        <div class="weui-actionsheet">
+            <div class="weui-actionsheet__menu">
+                <div class="weui-actionsheet__cell" ng-click="quickSort(1)" >升序</div>
+                <div class="weui-actionsheet__cell" ng-click="quickSort(2)" >降序</div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,24 @@
+<div class="weui-tab">
+    <div class="weui-navbar weui-fixed">
+        <div class="weui-navbar__item" ng-class="{'weui-bar__item_on':tabs==1}">
+            <a href="#/index/recommend/6" ng-click="on(1)">推荐</a>
+        </div>
+        <div class="weui-navbar__item" ng-class="{'weui-bar__item_on':tabs==2}">
+            <a href="#/index/hot/7" ng-click="on(2)">热门</a>
+        </div>
+        <div class="weui-navbar__item" ng-class="{'weui-bar__item_on':tabs==3}">
+            <a href="#/index/entertainment/8" ng-click="on(3)">娱乐</a>
+        </div>
+    </div>
+    <div class="weui-tab__panel">
+    </div>
+</div>
+<style>
+.weui-fixed {
+    position: fixed;
+}
+   .weui-navbar a{
+        width: 145px;
+        display: block;
+    }
+</style>

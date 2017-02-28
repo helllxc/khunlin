@@ -12,18 +12,7 @@ angular.module('controllers',[]).controller('indexCtrl',['$scope', '$http', 'coo
         console.log(data)
         $scope.channels = data
     })
-    $http.get('http://localhost:81/news/php/index.php/login_api/auto_login',{
-        params:{
-            username:cookie.getCookie('username'),
-            password:cookie.getCookie('password')
-        }
-    }).success(function(data){
-        if(data){
 
-        }else{
-            $window.location.href = '#/login'
-        }
-    })
 }]).controller('recommendCtrl',['$scope','$http','$state',function($scope,$http,$state){
     $scope.page = 1;
     $scope.news = [];
@@ -66,9 +55,39 @@ angular.module('controllers',[]).controller('indexCtrl',['$scope', '$http', 'coo
             $scope.isActionSheet = false;
         }
     }
-}]).controller('hotCtrl',['$scope',function ($scope) {
+}]).controller('hotCtrl',['$scope','$http','$state',function ($scope,$http,$state) {
+    $scope.loadMore = function(){
+        $scope.news = [];
+        $scope.isLoadMore = false;
+        $http.get('http://10.16.155.28:81/news/php/index.php/news_api/show_detail_by_channel_id',{
+            params:{
+                page: $scope.page++,
+                channel_id: $state.params.id
+            }
+        }).success(function(data){
+            $scope.news = $scope.news.concat(data.
+                news_list);
+            $scope.isLoadMore = true;
+        });
+    };
+    $scope.loadMore();
 
-}]).controller('entertainmentCtrl',['$scope',function ($scope) {
+}]).controller('entertainmentCtrl',['$scope','$http','$state',function ($scope,$http,$state){
+    $scope.loadMore = function(){
+        $scope.news = [];
+        $scope.isLoadMore = false;
+        $http.get('http://10.16.155.28:81/news/php/index.php/news_api/show_detail_by_channel_id',{
+            params:{
+                page: $scope.page++,
+                channel_id: $state.params.id
+            }
+        }).success(function(data){
+            $scope.news = $scope.news.concat(data.
+                news_list);
+            $scope.isLoadMore = true;
+        });
+    };
+    $scope.loadMore();
 
 }]).controller('detailCtrl',['$scope','$http','$state',function($scope,$http,$state){
     $scope.imgUrl = '';
@@ -90,6 +109,7 @@ angular.module('controllers',[]).controller('indexCtrl',['$scope', '$http', 'coo
     }
 }]).controller('loginCtrl',['$scope','cookie','$http','$window',function ($scope,cookie,$http,$window) {
         $scope.submit = function () {
+            console.log($scope.username,$scope.password)
             $http.post('http://10.16.155.28:81/news/php/index.php/login_api/login',{
                params:{
                    username:$scope.username,
@@ -102,4 +122,17 @@ angular.module('controllers',[]).controller('indexCtrl',['$scope', '$http', 'coo
                 $window.location.href = '#/index/recommend/6'
             })
         }
+}]).controller('registerCtrl',['$scope','cookie','$http','$window',function ($scope, cookie, $http, $window) {
+    $scope.submit = function () {
+        $http.post('http://10.16.155.28:81/news/php/index.php/login_api/register',{
+            params:{
+                username:$scope.username,
+                password:$scope.password
+            }
+        }).success(function (data) {
+            cookie.setCookie('username', data.user_name);
+            cookie.setCookie('token', data.info.token);
+           $window.location.href = '#/index/recommend/6'
+        })
+    }
 }])

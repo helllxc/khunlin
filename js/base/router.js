@@ -27,6 +27,24 @@ angular.module('routers',['ui.router'])
             url:'/login',
             templateUrl:'template/login.html',
             controller:'loginCtrl'
+        }).state('register',{
+            url:'/register',
+            templateUrl:'template/register.html',
+            controller:'registerCtrl'
         })
         $urlRouterProvider.when('','/index/recommend/6')
-    }])
+    }]).run(['$http','cookie','$window',function($http,cookie,$window){
+    $http.post('http://10.16.155.28:81/news/php/index.php/login_api/auto_login',{
+        params:{
+            username:cookie.getCookie('username'),
+            token:cookie.getCookie('token')
+        }
+    }).success(function(data){
+        console.log(data)
+        if(data){
+
+        }else{
+            $window.location.href = '#/login'
+        }
+    })
+}])
